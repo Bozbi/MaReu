@@ -5,10 +5,11 @@ import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
-import org.joda.time.DateTime;
+
+import org.threeten.bp.LocalDateTime;
 
 import java.util.List;
-import java.util.Set;
+
 
 
 /**
@@ -18,13 +19,13 @@ import java.util.Set;
 @Entity(tableName = "meeting_table")
 public class Meeting {
 
-    public static DateTime now = new DateTime();
+    ;
 
     @PrimaryKey ( autoGenerate = true)
     private int mId;
 
-    private DateTime mBeginsAt;
-    private DateTime mEndsAt;
+    private LocalDateTime mBeginsAt;
+    private LocalDateTime mEndsAt;
 
     @ColumnInfo(name = "room_number")
     private int mRoomNumber;
@@ -33,9 +34,9 @@ public class Meeting {
     private String mType;
 
     @ColumnInfo(name = "meeting_date")
-    private DateTime mMeetingDate;
+    private LocalDateTime mMeetingDate;
 
-    public Meeting(DateTime beginsAt, DateTime endsAt, int roomNumber, String title, List<String> participants, String type) {
+    public Meeting(LocalDateTime beginsAt, LocalDateTime endsAt, int roomNumber, String title, List<String> participants, String type) {
         mBeginsAt = beginsAt;
         mEndsAt = endsAt;
         mRoomNumber = roomNumber;
@@ -46,15 +47,19 @@ public class Meeting {
         //TODO mMeetingDate = Truc a faire avec mBegins;
     }
 
+    public int getId() {
+        return mId;
+    }
+
     public void setId(int id) {
         mId = id;
     }
 
-    public DateTime getBeginsAt() {
+    public LocalDateTime getBeginsAt() {
         return mBeginsAt;
     }
 
-    public DateTime getEndsAt() {
+    public LocalDateTime getEndsAt() {
         return mEndsAt;
     }
 
@@ -74,7 +79,11 @@ public class Meeting {
         return mType;
     }
 
+    public LocalDateTime getMeetingDate() {
+        return mMeetingDate;
+    }
 
-
-
+    public void setMeetingDate(LocalDateTime meetingDate) {
+        mMeetingDate = meetingDate;
+    }
 }
