@@ -1,22 +1,32 @@
 package com.sbizzera.mareu;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.os.Bundle;
-import android.util.Log;
-import android.widget.TextView;
+import android.view.Menu;
+import android.view.MenuInflater;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProviders;
 
 public class ListMeetingsActivity extends AppCompatActivity {
 
-    private static final String TAG = "ListMeetingsActivity";
+    private ListMeetingsViewModel mListMeetingsViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list_meetings);
 
-        TextView text = findViewById(R.id.text);
 
 
+        mListMeetingsViewModel = ViewModelProviders.of(this).get(ListMeetingsViewModel.class);
+
+
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater menuInflater = getMenuInflater();
+        menuInflater.inflate(R.menu.list_meetings_menu,menu);
+        return true;
     }
 }

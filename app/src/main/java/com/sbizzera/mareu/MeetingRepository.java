@@ -42,13 +42,13 @@ public class MeetingRepository {
     }
 
 
-    public LiveData<List<Meeting>> getAllMeetingsInRoomNb(int roomNumber) {
-        return meetingDao.getAllMeetingsInRoomNb(roomNumber);
-    }
-
-    public LiveData<List<Meeting>> getAllMeetingsAtDate(LocalDateTime date) {
-        return meetingDao.getAllMeetingsAtDate(date);
-    }
+//    public LiveData<List<Meeting>> getAllMeetingsInRoomNb(int roomNumber) {
+//        return meetingDao.getAllMeetingsInRoomNb(roomNumber);
+//    }
+//
+//    public LiveData<List<Meeting>> getAllMeetingsAtDate(LocalDateTime date) {
+//        return meetingDao.getAllMeetingsAtDate(date);
+//    }
 
     public static class InsertMeetingAsyncTask extends AsyncTask<Meeting, Void, Void> {
         private MeetingDAO meetingDAO;

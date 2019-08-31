@@ -17,18 +17,18 @@ public  class ListofStringTypeConverter {
     private  Gson gson = new Gson();
 
     @TypeConverter
-    public  List<String> stringTotringList(String data) {
-        if (data == null) {
+    public  List<String> stringTotringList(String string) {
+        if (string == null) {
             return Collections.emptyList();
         }
 
         Type listType = new TypeToken<List<String>>() {}.getType();
 
-        return gson.fromJson(data, listType);
+        return gson.fromJson(string, listType);
     }
 
     @TypeConverter
-    public  String stringListToString(List<String> someObjects) {
-        return gson.toJson(someObjects);
+    public  String stringListToString(List<String> stringList) {
+        return gson.toJson(stringList);
     }
 }

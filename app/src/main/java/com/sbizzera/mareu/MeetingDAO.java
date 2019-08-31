@@ -30,9 +30,9 @@ public interface MeetingDAO {
     @Query("SELECT * FROM meeting_table ")
     LiveData<List<Meeting>> getAllMeetings();
 
-    @Query("SELECT * FROM meeting_table WHERE room_number = :roomNumber ")
-    LiveData<List<Meeting>> getAllMeetingsInRoomNb(int roomNumber);
-
-    @Query("SELECT * FROM meeting_table WHERE meeting_date = :date")
-    LiveData<List<Meeting>> getAllMeetingsAtDate(LocalDateTime date);
+//    @Query("SELECT * FROM meeting_table WHERE room_number = :roomNumber ")
+//    LiveData<List<Meeting>> getAllMeetingsInRoomNb(int roomNumber);
+//
+//    @Query("SELECT * FROM meeting_table WHERE meeting_date = :date")
+//    LiveData<List<Meeting>> getAllMeetingsAtDate(LocalDateTime date);
 }
