@@ -8,22 +8,19 @@
 
 
     <androidx.recyclerview.widget.RecyclerView
-
+        android:id="@+id/recycler_view_list_meeting"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:listitem="@layout/meeting_item"
-        />
+        tools:listitem="@layout/recylcler_by_filter_item" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/floatingActionButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-       android:layout_margin="32dp"
         android:layout_gravity="bottom|end"
+        android:layout_margin="32dp"
 
         app:srcCompat="@drawable/ic_add" />
-
-
 
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
