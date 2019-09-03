@@ -1,13 +1,12 @@
-package com.sbizzera.mareu.Room;
+package com.sbizzera.mareu.room;
 
-import android.app.Application;
 import android.content.Context;
 
 import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
 
-import com.sbizzera.mareu.Model.Meeting;
+import com.sbizzera.mareu.model.Meeting;
 
 /**
  * Creates by Boris SBIZZERA on 02/09/2019.

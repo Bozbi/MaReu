@@ -1,4 +1,4 @@
-package com.sbizzera.mareu.Repository;
+package com.sbizzera.mareu.repository;
 
 import android.app.Application;
 import android.content.Context;
@@ -6,9 +6,9 @@ import android.os.AsyncTask;
 
 import androidx.lifecycle.LiveData;
 
-import com.sbizzera.mareu.Model.Meeting;
-import com.sbizzera.mareu.Room.MeetingDao;
-import com.sbizzera.mareu.Room.MeetingDataBase;
+import com.sbizzera.mareu.model.Meeting;
+import com.sbizzera.mareu.room.MeetingDao;
+import com.sbizzera.mareu.room.MeetingDataBase;
 
 import java.util.List;
 

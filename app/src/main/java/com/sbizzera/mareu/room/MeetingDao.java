@@ -1,11 +1,11 @@
-package com.sbizzera.mareu.Room;
+package com.sbizzera.mareu.room;
 
 import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
 import androidx.room.Insert;
 import androidx.room.Query;
 
-import com.sbizzera.mareu.Model.Meeting;
+import com.sbizzera.mareu.model.Meeting;
 
 import java.util.List;
 

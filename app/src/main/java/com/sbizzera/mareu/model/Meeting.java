@@ -1,4 +1,4 @@
-package com.sbizzera.mareu.Model;
+package com.sbizzera.mareu.model;
 
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;

@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingHorizontal="8dp"
+    android:paddingVertical="16dp"
+    >
+
+
+    <TextView
+        android:id="@+id/textview_meeting_title"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:gravity="left"
+        android:layout_marginHorizontal="16dp"
+        android:text="Réunion A - 14h00 - Peach"
+        android:textColor="@android:color/black"
+        android:textSize="16dp"
+        android:textStyle="bold"
+        android:maxLines="1"
+        android:ellipsize="end"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/textview_meeting_participants"
+        app:layout_constraintStart_toEndOf="@+id/imageview_meeting_color"
+        app:layout_constraintEnd_toStartOf="@+id/imageview_delete_meeting"
+        />
+
+    <TextView
+        android:id="@+id/textview_meeting_participants"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:gravity="left"
+        android:layout_marginHorizontal="16dp"
+        android:text="boris@gmail.com, celinetrambaud@yahoo.fr"
+        android:textSize="12dp"
+        android:maxLines="1"
+        android:ellipsize="end"
+        app:layout_constraintTop_toBottomOf="@+id/textview_meeting_title"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/imageview_meeting_color"
+        app:layout_constraintEnd_toStartOf="@+id/imageview_delete_meeting"
+        />
+
+
+    <ImageView
+        android:id="@+id/imageview_meeting_color"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:background="@drawable/ic_round"
+        android:backgroundTint="@color/colorPrimary"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:clickable="false"
+        />
+
+
+
+    <ImageView
+        android:id="@+id/imageview_delete_meeting"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/ic_delete"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:clickable="true"
+        />
+
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
