@@ -18,16 +18,17 @@ import java.util.List;
 public class MeetingRepository {
 
     private MeetingDao mMeetingDao;
-    private LiveData<List<Meeting>> mAllMeetings;
+
 
     public MeetingRepository (Application application){
         mMeetingDao = MeetingDataBase.getInstance(application).meetingDao();
-        mAllMeetings = mMeetingDao.getAllMeetings();
     }
 
     public LiveData<List<Meeting>> getAllMeetings() {
-        return mAllMeetings;
+        return mMeetingDao.getAllMeetings();
     }
+
+
 
     public void insertMeeting(Meeting meeting){
         new InsertMeetingAsyncTask(mMeetingDao).execute(meeting);
@@ -43,6 +44,24 @@ public class MeetingRepository {
         @Override
         protected Void doInBackground(Meeting... meetings) {
             mMeetingDao.insertMeeting(meetings[0]);
+            return null;
+        }
+    }
+
+    public void deleteMeeting(Meeting meeting){
+        new DeleteMeetingAsyncTask(mMeetingDao).execute(meeting);
+    }
+
+    private static class DeleteMeetingAsyncTask extends AsyncTask<Meeting,Void,Void>{
+        private MeetingDao mMeetingDao;
+
+        DeleteMeetingAsyncTask(MeetingDao meetingDao){
+            mMeetingDao = meetingDao;
+        }
+
+        @Override
+        protected Void doInBackground(Meeting... meetings) {
+            mMeetingDao.deleteMeeting(meetings[0]);
             return null;
         }
     }

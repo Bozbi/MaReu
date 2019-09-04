@@ -2,6 +2,7 @@ package com.sbizzera.mareu.room;
 
 import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
+import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.Query;
 
@@ -18,7 +19,11 @@ public interface MeetingDao {
     @Insert
     void insertMeeting(Meeting meeting);
 
+    @Delete
+    void deleteMeeting(Meeting meeting);
+
     @Query(value = "Select * from meetings_table")
     LiveData<List<Meeting>> getAllMeetings();
+
 
 }
