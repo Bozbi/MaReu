@@ -11,7 +11,7 @@ import com.sbizzera.mareu.model.Meeting;
 /**
  * Creates by Boris SBIZZERA on 02/09/2019.
  */
-@Database(entities = Meeting.class,version = 1)
+@Database(entities = Meeting.class,version = 1,exportSchema = false)
 public abstract class MeetingDataBase extends RoomDatabase {
 
     public static MeetingDataBase instance;

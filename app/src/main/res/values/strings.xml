@@ -1,3 +1,13 @@
 <resources>
     <string name="app_name">MaReu</string>
+    <string-array name="Rooms">
+        <item>Peach</item>
+        <item>Mario</item>
+        <item>Boo</item>
+        <item>Wario</item>
+
+
+
+    </string-array>
+
 </resources>

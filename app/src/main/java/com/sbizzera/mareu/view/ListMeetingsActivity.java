@@ -1,6 +1,5 @@
 package com.sbizzera.mareu.view;
 
-import android.app.DatePickerDialog;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -9,9 +8,7 @@ import android.view.View;
 import android.widget.Button;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.Lifecycle;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -20,7 +17,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.sbizzera.mareu.R;
 import com.sbizzera.mareu.model.Meeting;
-import com.sbizzera.mareu.view.utils.FilterDialog;
 import com.sbizzera.mareu.view.utils.ListMeetingsRecyclerAdapter;
 import com.sbizzera.mareu.viewmodel.ListMeetingsViewModel;
 
@@ -65,6 +61,12 @@ public class ListMeetingsActivity extends AppCompatActivity implements ListMeeti
             @Override
             public void onClick(View view) {
                 mListMeetingsViewModel.insertMeeting(new Meeting("Test2", 1, "bosbizz@gmail.com, celinetrambaud@gmail.com, gerard@hotmail.com"));
+//                Intent intent  = new Intent(ListMeetingsActivity.this,AddMeetingActivity.class);
+//                startActivity(intent);
+                AddAndEditMeetingDialog dialog = new AddAndEditMeetingDialog();
+                dialog.show(getSupportFragmentManager(),"tag");
+
+
 
             }
         });
