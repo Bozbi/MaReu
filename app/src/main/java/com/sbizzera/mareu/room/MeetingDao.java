@@ -19,8 +19,8 @@ public interface MeetingDao {
     @Insert
     void insertMeeting(Meeting meeting);
 
-    @Delete
-    void deleteMeeting(Meeting meeting);
+    @Query(value = "DELETE fROM meetings_table WHERE mId = :meetingId")
+    void deleteMeeting(int meetingId);
 
     @Query(value = "Select * from meetings_table")
     LiveData<List<Meeting>> getAllMeetings();

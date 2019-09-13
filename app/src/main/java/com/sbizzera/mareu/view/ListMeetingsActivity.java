@@ -1,6 +1,9 @@
 package com.sbizzera.mareu.view;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -17,18 +20,25 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.sbizzera.mareu.R;
 import com.sbizzera.mareu.model.Meeting;
+import com.sbizzera.mareu.model.MeetingRoom;
 import com.sbizzera.mareu.view.utils.ListMeetingsRecyclerAdapter;
 import com.sbizzera.mareu.viewmodel.ListMeetingsViewModel;
 
+import org.threeten.bp.LocalDate;
+import org.threeten.bp.LocalDateTime;
+import org.threeten.bp.LocalTime;
+
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class ListMeetingsActivity extends AppCompatActivity implements ListMeetingsRecyclerAdapter.OnMeetingClickListener {
 
     private ListMeetingsViewModel mListMeetingsViewModel;
-
     private RecyclerView mMeetingListRecyclerView;
     private FloatingActionButton mAddMeetingFab;
     private Button mButton;
+
 
 
 
@@ -49,10 +59,11 @@ public class ListMeetingsActivity extends AppCompatActivity implements ListMeeti
 
         mListMeetingsViewModel = ViewModelProviders.of(this).get(ListMeetingsViewModel.class);
 
-        mListMeetingsViewModel.getMeetings().observe(this, new Observer<List<Meeting>>() {
+        mListMeetingsViewModel.getMeetings().observe(this, new Observer<List<MeetingsUiModel>>() {
             @Override
-            public void onChanged(List<Meeting> meetings) {
+            public void onChanged(List<MeetingsUiModel> meetings) {
                 adapter.setAllMeetingsList(meetings);
+
             }
         });
 
@@ -60,13 +71,9 @@ public class ListMeetingsActivity extends AppCompatActivity implements ListMeeti
         mAddMeetingFab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mListMeetingsViewModel.insertMeeting(new Meeting("Test2", 1, "bosbizz@gmail.com, celinetrambaud@gmail.com, gerard@hotmail.com"));
-//                Intent intent  = new Intent(ListMeetingsActivity.this,AddMeetingActivity.class);
-//                startActivity(intent);
-                AddAndEditMeetingDialog dialog = new AddAndEditMeetingDialog();
-                dialog.show(getSupportFragmentManager(),"tag");
-
-
+                Intent intent = new Intent(ListMeetingsActivity.this, AddMeetingActivity.class);
+                startActivity(intent);
+                mListMeetingsViewModel.insertMeeting(new Meeting("Org", LocalDateTime.of(LocalDate.of(2019, 9, 1), LocalTime.of(1, 1)), LocalDateTime.now().plusHours(1), MeetingRoom.BOWSER, new ArrayList<String>(Arrays.asList("boris@gmail.com", "celine@gmail.com", "celine@gmail.com", "celine@gmail.com", "celine@gmail.com", "celine@gmail.com"))));
 
             }
         });
@@ -74,10 +81,9 @@ public class ListMeetingsActivity extends AppCompatActivity implements ListMeeti
         mButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mListMeetingsViewModel.filterByRoom(1);
+                mListMeetingsViewModel.filterByRoom(MeetingRoom.PEACH);
             }
         });
-
 
 
     }
@@ -85,7 +91,7 @@ public class ListMeetingsActivity extends AppCompatActivity implements ListMeeti
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater menuInflater = getMenuInflater();
-        menuInflater.inflate(R.menu.filter_meetings_menu,menu);
+        menuInflater.inflate(R.menu.filter_meetings_menu, menu);
         return true;
     }
 
@@ -93,14 +99,15 @@ public class ListMeetingsActivity extends AppCompatActivity implements ListMeeti
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
 
         FilterDialog dialog = new FilterDialog();
-        dialog.show(getSupportFragmentManager(),"example");
+        dialog.show(getSupportFragmentManager(), "Filter Dialog");
 
         return true;
     }
 
     @Override
-    public void onDeleteClick(Meeting meeting) {
+    public void onDeleteClick(MeetingsUiModel meeting) {
         mListMeetingsViewModel.deleteMeeting(meeting);
     }
+
 
 }

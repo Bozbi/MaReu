@@ -1,5 +1,6 @@
 package com.sbizzera.mareu.view.utils;
 
+import android.graphics.PorterDuff;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.sbizzera.mareu.R;
 import com.sbizzera.mareu.model.Meeting;
 import com.sbizzera.mareu.view.ListMeetingsActivity;
+import com.sbizzera.mareu.view.MeetingsUiModel;
 import com.sbizzera.mareu.viewmodel.ListMeetingsViewModel;
 
 import java.util.List;
@@ -21,7 +23,7 @@ import java.util.List;
  */
 public class ListMeetingsRecyclerAdapter extends RecyclerView.Adapter<ListMeetingsRecyclerAdapter.MeetingViewHolder> {
 
-    private List<Meeting> mAllMeetings;
+    private List<MeetingsUiModel> mAllMeetings;
     private OnMeetingClickListener mOnMeetingClickListener;
 
     public ListMeetingsRecyclerAdapter(OnMeetingClickListener onMeetingClickListener){
@@ -37,10 +39,11 @@ public class ListMeetingsRecyclerAdapter extends RecyclerView.Adapter<ListMeetin
 
     @Override
     public void onBindViewHolder(@NonNull MeetingViewHolder holder, int position) {
-        Meeting currentMeeting = mAllMeetings.get(position);
-        String textTodisplay = currentMeeting.getTitle()+" - HH:mm - Salle "+ currentMeeting.getRoomNumber();
-        holder.mMeetingTitleTextView.setText(textTodisplay);
-        holder.mMeetingParticiapantsTextView.setText(currentMeeting.getParticipants());
+        MeetingsUiModel currentMeeting = mAllMeetings.get(position);
+        holder.mMeetingTitleTextView.setText(currentMeeting.getListMeetingsTitle());
+        holder.mMeetingDateandRoomTextView.setText(currentMeeting.getMeetingDateAndRoom());
+        holder.mMeetingParticiapantsTextView.setText(currentMeeting.getListMeetingsParticipants());
+        holder.mImageView.setColorFilter(holder.mImageView.getContext().getColor(currentMeeting.getListMeetingsColor()), PorterDuff.Mode.MULTIPLY);
 
     }
 
@@ -52,7 +55,7 @@ public class ListMeetingsRecyclerAdapter extends RecyclerView.Adapter<ListMeetin
         return mAllMeetings.size();
     }
 
-    public void setAllMeetingsList(List<Meeting> allMeetings) {
+    public void setAllMeetingsList(List<MeetingsUiModel> allMeetings) {
         mAllMeetings = allMeetings;
         notifyDataSetChanged();
     }
@@ -61,8 +64,10 @@ public class ListMeetingsRecyclerAdapter extends RecyclerView.Adapter<ListMeetin
     public class MeetingViewHolder extends RecyclerView.ViewHolder  implements View.OnClickListener{
 
         public TextView mMeetingTitleTextView;
+        public TextView mMeetingDateandRoomTextView;
         public TextView mMeetingParticiapantsTextView;
         public ImageView mDeleteImageView;
+        public ImageView mImageView;
 
         private OnMeetingClickListener mOnMeetingClickListener;
 
@@ -71,6 +76,8 @@ public class ListMeetingsRecyclerAdapter extends RecyclerView.Adapter<ListMeetin
             mMeetingTitleTextView = itemView.findViewById(R.id.textview_meeting_title);
             mMeetingParticiapantsTextView = itemView.findViewById(R.id.textview_meeting_participants);
             mDeleteImageView = itemView.findViewById(R.id.imageview_delete_meeting);
+            mMeetingDateandRoomTextView = itemView.findViewById(R.id.txt_meeting_date_and_room);
+            mImageView = itemView.findViewById(R.id.imageview_meeting_color);
             mDeleteImageView.setOnClickListener(this);
             mOnMeetingClickListener = onMeetingClickListener;
         }
@@ -82,6 +89,6 @@ public class ListMeetingsRecyclerAdapter extends RecyclerView.Adapter<ListMeetin
     }
 
     public interface OnMeetingClickListener{
-        void onDeleteClick(Meeting meeting);
+        void onDeleteClick(MeetingsUiModel meeting);
     }
 }

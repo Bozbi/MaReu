@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.sbizzera.mareu">
 
     <application
@@ -8,7 +9,27 @@
         android:label="Ma Réu"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme"
+        android:name=".view.MainApplication"
+        tools:ignore="GoogleAppIndexingWarning">
+
+        <activity android:name=".view.ListContactsActivity"
+            android:theme="@style/AppThemeWhite"
+            android:label=""
+            android:parentActivityName=".view.AddMeetingActivity"
+            >
+
+
+        </activity>
+
+        <activity
+            android:name=".view.AddMeetingActivity"
+            android:label=""
+            android:parentActivityName=".view.ListMeetingsActivity"
+            android:theme="@style/AppThemeWhite"
+            >
+
+        </activity>
         <activity android:name=".view.ListMeetingsActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

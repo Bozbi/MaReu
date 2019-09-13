@@ -9,6 +9,7 @@ import androidx.lifecycle.LiveData;
 import com.sbizzera.mareu.model.Meeting;
 import com.sbizzera.mareu.room.MeetingDao;
 import com.sbizzera.mareu.room.MeetingDataBase;
+import com.sbizzera.mareu.view.MeetingsUiModel;
 
 import java.util.List;
 
@@ -48,11 +49,11 @@ public class MeetingRepository {
         }
     }
 
-    public void deleteMeeting(Meeting meeting){
-        new DeleteMeetingAsyncTask(mMeetingDao).execute(meeting);
+    public void deleteMeeting(int meetingId){
+        new DeleteMeetingAsyncTask(mMeetingDao).execute(meetingId);
     }
 
-    private static class DeleteMeetingAsyncTask extends AsyncTask<Meeting,Void,Void>{
+    private static class DeleteMeetingAsyncTask extends AsyncTask<Integer,Void,Void>{
         private MeetingDao mMeetingDao;
 
         DeleteMeetingAsyncTask(MeetingDao meetingDao){
@@ -60,8 +61,8 @@ public class MeetingRepository {
         }
 
         @Override
-        protected Void doInBackground(Meeting... meetings) {
-            mMeetingDao.deleteMeeting(meetings[0]);
+        protected Void doInBackground(Integer... meetingsId) {
+            mMeetingDao.deleteMeeting(meetingsId[0]);
             return null;
         }
     }
