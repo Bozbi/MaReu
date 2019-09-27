@@ -1,5 +1,6 @@
 package com.sbizzera.mareu.model;
 
+import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.Ignore;
@@ -14,7 +15,7 @@ import java.util.List;
  * Creates by Boris SBIZZERA on 02/09/2019.
  */
 @Entity(tableName = "meetings_table")
-public class Meeting  {
+public class Meeting implements Serializable {
 
     @PrimaryKey(autoGenerate = true)
     private int mId;
@@ -84,4 +85,5 @@ public class Meeting  {
     public void setRoom(MeetingRoom room) {
         mRoom = room;
     }
+
 }

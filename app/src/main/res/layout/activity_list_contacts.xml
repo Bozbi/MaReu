@@ -15,8 +15,8 @@
         android:layout_marginTop="20dp"
         android:layout_marginBottom="20dp"
         android:background="@android:color/transparent"
-        android:hint="Ajouter un participant"
-        android:textSize="24sp"
+        android:hint="@string/edittext_hint"
+        android:textSize="16sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tbar_tb_contatcs_activity" />
 

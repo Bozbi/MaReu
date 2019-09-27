@@ -1,7 +1,6 @@
 package com.sbizzera.mareu.repository;
 
 import android.app.Application;
-import android.content.Context;
 import android.os.AsyncTask;
 
 import androidx.lifecycle.LiveData;
@@ -9,19 +8,18 @@ import androidx.lifecycle.LiveData;
 import com.sbizzera.mareu.model.Meeting;
 import com.sbizzera.mareu.room.MeetingDao;
 import com.sbizzera.mareu.room.MeetingDataBase;
-import com.sbizzera.mareu.view.MeetingsUiModel;
 
 import java.util.List;
 
 /**
  * Creates by Boris SBIZZERA on 02/09/2019.
  */
+
 public class MeetingRepository {
 
     private MeetingDao mMeetingDao;
 
-
-    public MeetingRepository (Application application){
+    public MeetingRepository(Application application) {
         mMeetingDao = MeetingDataBase.getInstance(application).meetingDao();
     }
 
@@ -30,15 +28,14 @@ public class MeetingRepository {
     }
 
 
-
-    public void insertMeeting(Meeting meeting){
+    public void insertMeeting(Meeting meeting) {
         new InsertMeetingAsyncTask(mMeetingDao).execute(meeting);
     }
 
-    private static class InsertMeetingAsyncTask extends AsyncTask<Meeting,Void,Void>{
+    private static class InsertMeetingAsyncTask extends AsyncTask<Meeting, Void, Void> {
         private MeetingDao mMeetingDao;
 
-         InsertMeetingAsyncTask(MeetingDao meetingDao){
+        InsertMeetingAsyncTask(MeetingDao meetingDao) {
             mMeetingDao = meetingDao;
         }
 
@@ -49,14 +46,32 @@ public class MeetingRepository {
         }
     }
 
-    public void deleteMeeting(int meetingId){
+    public void updateMeeting(Meeting meeting) {
+        new UpdateMeetingAsyncTask(mMeetingDao).execute(meeting);
+    }
+
+    private static class UpdateMeetingAsyncTask extends AsyncTask<Meeting, Void, Void> {
+        private MeetingDao mMeetingDao;
+
+        UpdateMeetingAsyncTask(MeetingDao meetingDao) {
+            mMeetingDao = meetingDao;
+        }
+
+        @Override
+        protected Void doInBackground(Meeting... meetings) {
+            mMeetingDao.updateMeeting(meetings[0]);
+            return null;
+        }
+    }
+
+    public void deleteMeeting(int meetingId) {
         new DeleteMeetingAsyncTask(mMeetingDao).execute(meetingId);
     }
 
-    private static class DeleteMeetingAsyncTask extends AsyncTask<Integer,Void,Void>{
+    private static class DeleteMeetingAsyncTask extends AsyncTask<Integer, Void, Void> {
         private MeetingDao mMeetingDao;
 
-        DeleteMeetingAsyncTask(MeetingDao meetingDao){
+        DeleteMeetingAsyncTask(MeetingDao meetingDao) {
             mMeetingDao = meetingDao;
         }
 
@@ -66,5 +81,10 @@ public class MeetingRepository {
             return null;
         }
     }
+
+    public List<Meeting> getAllMeetingsSync() {
+        return mMeetingDao.getAllMeetingsSync();
+    }
+
 
 }

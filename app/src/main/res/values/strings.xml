@@ -1,12 +1,7 @@
 <resources>
     <string name="app_name">MaReu</string>
-    <string-array name="Rooms">
-        <item>Peach</item>
-        <item>Mario</item>
-        <item>Boo</item>
-        <item>Wario</item>
 
+    <string name="edittext_hint"><font size="22">Ajouter un participant</font></string>
 
-    </string-array>
 
 </resources>

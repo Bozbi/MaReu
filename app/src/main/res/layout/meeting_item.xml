@@ -4,73 +4,17 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:paddingHorizontal="8dp"
-    android:paddingVertical="16dp"
-    >
-
-
-    <TextView
-        android:id="@+id/textview_meeting_title"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:gravity="left"
-        android:layout_marginHorizontal="16dp"
-        android:text="Réunion A "
-        android:textColor="@android:color/black"
-        android:textSize="16dp"
-        android:textStyle="bold"
-        android:maxLines="1"
-        android:ellipsize="end"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toTopOf="@+id/txt_meeting_date_and_room"
-        app:layout_constraintStart_toEndOf="@+id/imageview_meeting_color"
-        app:layout_constraintEnd_toStartOf="@+id/imageview_delete_meeting"
-        />
-
-    <TextView
-        android:id="@+id/txt_meeting_date_and_room"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:gravity="left"
-        android:layout_marginHorizontal="16dp"
-        android:text="Le 12 September à 10:53 - Salle Peach"
-android:textStyle="bold|italic"
-        android:textSize="14sp"
-        android:maxLines="1"
-        android:ellipsize="end"
-        app:layout_constraintTop_toBottomOf="@+id/textview_meeting_title"
-        app:layout_constraintBottom_toTopOf="@+id/textview_meeting_participants"
-        app:layout_constraintStart_toEndOf="@+id/imageview_meeting_color"
-        app:layout_constraintEnd_toStartOf="@+id/imageview_delete_meeting"/>
-
-
-    <TextView
-        android:id="@+id/textview_meeting_participants"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:gravity="left"
-        android:layout_marginHorizontal="16dp"
-        android:text="boris@gmail.com, celinetrambaud@yahoo.fr"
-        android:textSize="12dp"
-        android:maxLines="1"
-        android:ellipsize="end"
-        app:layout_constraintTop_toBottomOf="@+id/txt_meeting_date_and_room"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/imageview_meeting_color"
-        app:layout_constraintEnd_toStartOf="@+id/imageview_delete_meeting"
-        />
-
+    android:paddingVertical="16dp">
 
     <ImageView
         android:id="@+id/imageview_meeting_color"
-        android:layout_height="wrap_content"
         android:layout_width="wrap_content"
-        android:src="@drawable/ic_round"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_height="wrap_content"
         android:clickable="false"
-        />
-
+        android:src="@drawable/ic_round"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 
     <ImageView
@@ -78,13 +22,72 @@ android:textStyle="bold|italic"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@drawable/ic_delete"
+        android:clickable="true"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/ctn_meeting_container"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        android:clickable="true"
-        />
+        app:layout_constraintStart_toEndOf="@+id/imageview_meeting_color"
+        app:layout_constraintEnd_toStartOf="@+id/imageview_delete_meeting"
+        >
 
 
+        <TextView
+            android:id="@+id/textview_meeting_title"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="16dp"
+            android:ellipsize="end"
+            android:gravity="left"
+            android:maxLines="1"
+            android:text="Réunion A "
+            android:textColor="@android:color/black"
+            android:textSize="16dp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toTopOf="@+id/txt_meeting_date_and_room"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/txt_meeting_date_and_room"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="16dp"
+            android:ellipsize="end"
+            android:gravity="left"
+            android:maxLines="1"
+            android:text="Le 12 September à 10:53 - Salle Peach"
+            android:textSize="14sp"
+            android:textStyle="bold|italic"
+            app:layout_constraintBottom_toTopOf="@+id/textview_meeting_participants"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textview_meeting_title" />
+
+
+        <TextView
+            android:id="@+id/textview_meeting_participants"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="16dp"
+            android:ellipsize="end"
+            android:gravity="left"
+            android:maxLines="1"
+            android:text="boris@gmail.com, celinetrambaud@yahoo.fr"
+            android:textSize="12dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/txt_meeting_date_and_room" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -4,6 +4,8 @@ import androidx.annotation.ColorRes;
 
 import com.sbizzera.mareu.R;
 
+import java.util.Collections;
+
 /**
  * Creates by Boris SBIZZERA on 09/09/2019.
  */
@@ -31,6 +33,15 @@ public enum MeetingRoom {
         mColor = color;
     }
 
+    public static MeetingRoom fromName(String room) {
+        for (MeetingRoom value : values()) {
+            if (value.getRoomName().equalsIgnoreCase(room)){
+                return value;
+            }
+        }
+        throw new IllegalStateException("Unknown room name : "+room);
+    }
+
     public String getRoomName() {
         return mRoomName;
     }
@@ -39,5 +50,17 @@ public enum MeetingRoom {
     public int getColor() {
         return mColor;
     }
+
+    public static String[] getRoomsList(){
+        String[] roomsList = new String[MeetingRoom.values().length];
+        int i = 0;
+        for (MeetingRoom room:MeetingRoom.values()) {
+            roomsList[i] = room.getRoomName();
+            i++;
+        }
+        return roomsList;
+    }
+
+
 
 }

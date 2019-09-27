@@ -1,7 +1,5 @@
 package com.sbizzera.mareu.model.utils;
 
-import android.text.TextUtils;
-
 import androidx.room.TypeConverter;
 
 import com.google.gson.Gson;
@@ -13,7 +11,6 @@ import org.threeten.bp.format.DateTimeFormatter;
 
 import java.lang.reflect.Type;
 import java.util.List;
-import java.util.stream.Stream;
 
 /**
  * Creates by Boris SBIZZERA on 09/09/2019.
@@ -24,8 +21,9 @@ public class Converters {
 
     @TypeConverter
     public static MeetingRoom fromRoomName(String roomName) {
-        Type roomType = new TypeToken<MeetingRoom>(){}.getType();
-        return new Gson().fromJson(roomName,roomType);
+        Type roomType = new TypeToken<MeetingRoom>() {
+        }.getType();
+        return new Gson().fromJson(roomName, roomType);
     }
 
     @TypeConverter
@@ -46,13 +44,14 @@ public class Converters {
     }
 
     @TypeConverter
-    public  static List<String> fromString (String string){
-        Type listType = new TypeToken<List<String>>() {}.getType();
+    public static List<String> fromString(String string) {
+        Type listType = new TypeToken<List<String>>() {
+        }.getType();
         return new Gson().fromJson(string, listType);
     }
 
     @TypeConverter
-    public static String fromListString (List<String> stringList){
+    public static String fromListString(List<String> stringList) {
         Gson gson = new Gson();
         String json = gson.toJson(stringList);
         return json;

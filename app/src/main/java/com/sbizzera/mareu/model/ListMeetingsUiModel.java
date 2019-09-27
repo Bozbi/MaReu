@@ -1,11 +1,13 @@
-package com.sbizzera.mareu.view;
+package com.sbizzera.mareu.model;
 
 import androidx.annotation.ColorRes;
+
+import java.io.Serializable;
 
 /**
  * Creates by Boris SBIZZERA on 11/09/2019.
  */
-public class MeetingsUiModel {
+public class ListMeetingsUiModel implements Serializable {
 
     private  int mId;
     private String mListMeetingsTitle;
@@ -13,7 +15,7 @@ public class MeetingsUiModel {
     private int mListMeetingsColor;
     private String mListMeetingsParticipants;
 
-    public MeetingsUiModel(int id, String listMeetingsTitle,String meetingDate,  @ColorRes int listMeetingsColor, String listMeetingsParticipants) {
+    public ListMeetingsUiModel(int id, String listMeetingsTitle, String meetingDate, @ColorRes int listMeetingsColor, String listMeetingsParticipants) {
         mListMeetingsTitle = listMeetingsTitle;
         mListMeetingsColor = listMeetingsColor;
         mMeetingDateAndRoom = meetingDate;

@@ -12,6 +12,7 @@
         android:text="boris.sbizzerasqdfsqdfsqdfsfdsqdfsdfsdfsdfsqdf@gmail.com"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
+        android:textSize="16sp"
         android:paddingVertical="6dp"
         android:textColor="@android:color/black"
         android:maxLines="1"
