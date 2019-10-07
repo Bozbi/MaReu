@@ -11,6 +11,7 @@ import androidx.lifecycle.MediatorLiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.Transformations;
+import androidx.lifecycle.ViewModel;
 
 import com.sbizzera.mareu.R;
 import com.sbizzera.mareu.model.Meeting;
@@ -30,7 +31,7 @@ import java.util.List;
  * Creates by Boris SBIZZERA on 03/09/2019.
  */
 
-public class ListMeetingsViewModel extends AndroidViewModel implements Serializable {
+public class ListMeetingsViewModel extends ViewModel implements Serializable {
 
     private MeetingRepository mMeetingRepository;
     private LiveData<List<Meeting>> mAllMeetings;
@@ -39,16 +40,13 @@ public class ListMeetingsViewModel extends AndroidViewModel implements Serializa
     private MediatorLiveData<Integer> mMenuMediatorLiveData = new MediatorLiveData<>();
     private MediatorLiveData<List<Meeting>> mFilteredMeetings = new MediatorLiveData<>();
     private LiveData<List<ListMeetingsUiModel>> mListMeetingsUiModel;
-    private List<Meeting> mAllMeetingsSync;
-
 
 
     private DateTimeFormatter mDateFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
 
-    public ListMeetingsViewModel(@NonNull Application application) {
-        super(application);
-        mMeetingRepository = new MeetingRepository(application);
+    public ListMeetingsViewModel(MeetingRepository meetingRepository) {
+        mMeetingRepository = meetingRepository;
         deleteOldMeetings();
         mAllMeetings = mMeetingRepository.getAllMeetings();
 
@@ -179,8 +177,8 @@ public class ListMeetingsViewModel extends AndroidViewModel implements Serializa
 
 
     private void deleteOldMeetings() {
-        mAllMeetingsSync = mMeetingRepository.getAllMeetingsSync();
-        for (Meeting meeting : mAllMeetingsSync) {
+        List<Meeting> allMeetingsSync = mMeetingRepository.getAllMeetingsSync();
+        for (Meeting meeting : allMeetingsSync) {
             if (meeting.getMeetingStop().isBefore(LocalDateTime.now())) {
                 mMeetingRepository.deleteMeeting(meeting.getId());
             }

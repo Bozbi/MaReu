@@ -16,10 +16,11 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.sbizzera.mareu.R;
-import com.sbizzera.mareu.model.Meeting;
 import com.sbizzera.mareu.model.ListMeetingsUiModel;
+import com.sbizzera.mareu.model.Meeting;
 import com.sbizzera.mareu.view.utils.ListMeetingsRecyclerViewAdapter;
 import com.sbizzera.mareu.viewmodel.ListMeetingsViewModel;
+import com.sbizzera.mareu.viewmodel.ViewModelFactory;
 
 import java.util.List;
 
@@ -43,7 +44,7 @@ public class ListMeetingsActivity extends AppCompatActivity implements ListMeeti
         meetingListRecyclerView.setAdapter(adapter);
 
 
-        mListMeetingsViewModel = ViewModelProviders.of(this).get(ListMeetingsViewModel.class);
+        mListMeetingsViewModel = ViewModelProviders.of(this, ViewModelFactory.getInstance()).get(ListMeetingsViewModel.class);
         mListMeetingsViewModel.getMeetings().observe(this, new Observer<List<ListMeetingsUiModel>>() {
             @Override
             public void onChanged(List<ListMeetingsUiModel> meetings) {
@@ -72,14 +73,13 @@ public class ListMeetingsActivity extends AppCompatActivity implements ListMeeti
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         Integer menuId = mListMeetingsViewModel.getMenuLiveDate().getValue();
-        if (menuId != null){
-        MenuInflater menuInflater = getMenuInflater();
-        menuInflater.inflate(menuId, menu);
-        return true;
+        if (menuId != null) {
+            MenuInflater menuInflater = getMenuInflater();
+            menuInflater.inflate(menuId, menu);
+            return true;
         }
         return false;
     }
-
 
 
     @Override
@@ -88,7 +88,7 @@ public class ListMeetingsActivity extends AppCompatActivity implements ListMeeti
             FilterDialog dialog = FilterDialog.newInstance(mListMeetingsViewModel);
             dialog.show(getSupportFragmentManager(), "Filter Dialog");
         } else {
-            mListMeetingsViewModel.setFilters(null,null);
+            mListMeetingsViewModel.setFilters(null, null);
         }
         return true;
     }
@@ -103,7 +103,7 @@ public class ListMeetingsActivity extends AppCompatActivity implements ListMeeti
     public void onEditClick(int position) {
         Intent intent = new Intent(ListMeetingsActivity.this, AddMeetingActivity.class);
         Meeting meetingToPass = mListMeetingsViewModel.getFilteredMeetings().getValue().get(position);
-        intent.putExtra(MEETING_EXTRA,meetingToPass);
+        intent.putExtra(MEETING_EXTRA, meetingToPass);
         intent.setAction(INTENT_ACTION_UPDATE_NOTE);
         startActivity(intent);
     }

@@ -8,12 +8,15 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.ViewModel;
 
 import com.sbizzera.mareu.model.AddMeetingUiModel;
 import com.sbizzera.mareu.model.Meeting;
 import com.sbizzera.mareu.model.MeetingRoom;
 import com.sbizzera.mareu.repository.MeetingRepository;
+import com.sbizzera.mareu.room.MeetingDao;
 import com.sbizzera.mareu.view.ListMeetingsActivity;
+import com.sbizzera.mareu.view.MainApplication;
 
 import org.threeten.bp.LocalDate;
 import org.threeten.bp.LocalDateTime;
@@ -27,7 +30,7 @@ import java.util.List;
  * Creates by Boris SBIZZERA on 09/09/2019.
  */
 
-public class AddMeetingViewModel extends AndroidViewModel {
+public class AddMeetingViewModel extends ViewModel {
 
     private MeetingRepository mMeetingRepository;
 
@@ -36,9 +39,14 @@ public class AddMeetingViewModel extends AndroidViewModel {
 
     private MutableLiveData<String> mAlertMessage = new MutableLiveData<>();
 
-    public AddMeetingViewModel(@NonNull Application application) {
-        super(application);
-        mMeetingRepository = new MeetingRepository(application);
+    private MutableLiveData<ViewAction> mViewAction =  new MutableLiveData<>();
+
+    public LiveData<ViewAction> getViewAction() {
+        return mViewAction;
+    }
+
+    public AddMeetingViewModel(MeetingRepository meetingRepository) {
+        mMeetingRepository = meetingRepository;
     }
 
     public String[] getAllRoomsList() {
@@ -49,7 +57,7 @@ public class AddMeetingViewModel extends AndroidViewModel {
         return mAlertMessage;
     }
 
-    public boolean insertOrUpdateMeeting(String title, String startDate, String startHour, String stopDate, String stopHour, String participants, String room, Intent intent) {
+    public void insertOrUpdateMeeting(String title, String startDate, String startHour, String stopDate, String stopHour, String participants, String room, Intent intent) {
         if (areAllFieldsCompleted(title, participants, room)) {
             Meeting meeting = newMeetingFromStrings(title, startDate, startHour, stopDate, stopHour, participants, room);
             if(intent.hasExtra(ListMeetingsActivity.MEETING_EXTRA)){
@@ -63,19 +71,20 @@ public class AddMeetingViewModel extends AndroidViewModel {
                     if (intent.getAction().equals(ListMeetingsActivity.INTENT_ACTION_UPDATE_NOTE)) {
 
                         mMeetingRepository.updateMeeting(meeting);
+
                     }
-                    return true;
+                    mViewAction.setValue(ViewAction.FINISH);
                 } else {
                     mAlertMessage.setValue("La salle " + meeting.getRoom().getRoomName() + " est déjà prise à ces horaires");
-                    return false;
+                    mViewAction.setValue(null);
                 }
             } else {
                 mAlertMessage.setValue("La réunion que vous prévoyez n'a pas des horaires cohérents !");
-                return false;
+                mViewAction.setValue(null);
             }
         } else {
             mAlertMessage.setValue("Tous les champs doivent être remplis pour pouvoir enregistrer la réunion !");
-            return false;
+            mViewAction.setValue(null);
         }
     }
 

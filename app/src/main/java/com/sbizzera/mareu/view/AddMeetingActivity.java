@@ -25,6 +25,8 @@ import com.sbizzera.mareu.R;
 import com.sbizzera.mareu.model.AddMeetingUiModel;
 import com.sbizzera.mareu.model.Meeting;
 import com.sbizzera.mareu.viewmodel.AddMeetingViewModel;
+import com.sbizzera.mareu.viewmodel.ViewAction;
+import com.sbizzera.mareu.viewmodel.ViewModelFactory;
 
 import org.threeten.bp.LocalDate;
 import org.threeten.bp.LocalDateTime;
@@ -48,8 +50,6 @@ public class AddMeetingActivity extends AppCompatActivity {
     private TextView txtLocation;
 
     private AddMeetingViewModel mAddMeetingViewModel;
-    private String mAlerteMessage;
-
 
 
     @Override
@@ -70,7 +70,7 @@ public class AddMeetingActivity extends AppCompatActivity {
         txtContacts = findViewById(R.id.txt_contacts);
         txtLocation = findViewById(R.id.txt_room);
 
-        mAddMeetingViewModel = ViewModelProviders.of(this).get(AddMeetingViewModel.class);
+        mAddMeetingViewModel = ViewModelProviders.of(this, ViewModelFactory.getInstance()).get(AddMeetingViewModel.class);
 
         setFieldDependingOnIntentAction(getIntent());
 
@@ -78,7 +78,22 @@ public class AddMeetingActivity extends AppCompatActivity {
         mAddMeetingViewModel.getAlertMessage().observe(this, new Observer<String>() {
             @Override
             public void onChanged(String message) {
-                mAlerteMessage = message;
+                new AlertDialog.Builder(AddMeetingActivity.this)
+                        .setMessage(message)
+                        .show();
+            }
+        });
+
+        mAddMeetingViewModel.getViewAction().observe(this, new Observer<ViewAction>() {
+            @Override
+            public void onChanged(ViewAction viewAction) {
+                if(viewAction!=null) {
+                    switch (viewAction) {
+                        case FINISH:
+                            finish();
+                            break;
+                    }
+                }
             }
         });
 
@@ -86,15 +101,11 @@ public class AddMeetingActivity extends AppCompatActivity {
         btnSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-                if (mAddMeetingViewModel.insertOrUpdateMeeting(edtxTitle.getText().toString(), txtStartDate.getText().toString(), txtStartHour.getText().toString(), txtStopDate.getText().toString(), txtStopHour.getText().toString(), txtContacts.getText().toString(), txtLocation.getText().toString(), getIntent())) {
-                    finish();
-                } else {
-                    new AlertDialog.Builder(AddMeetingActivity.this)
-                            .setMessage(mAlerteMessage)
-                            .show();
-                }
-
+                mAddMeetingViewModel.insertOrUpdateMeeting(edtxTitle.getText().toString(),
+                        txtStartDate.getText().toString(), txtStartHour.getText().toString(),
+                        txtStopDate.getText().toString(), txtStopHour.getText().toString(),
+                        txtContacts.getText().toString(), txtLocation.getText().toString(),
+                        getIntent());
             }
         });
 
@@ -194,11 +205,11 @@ public class AddMeetingActivity extends AppCompatActivity {
     }
 
     private void setFieldDependingOnIntentAction(Intent intentAction) {
-        if(intentAction.getAction().equals(ListMeetingsActivity.INTENT_ACTION_UPDATE_NOTE)){
+        if (intentAction.getAction().equals(ListMeetingsActivity.INTENT_ACTION_UPDATE_NOTE)) {
             Meeting meeting = (Meeting) intentAction.getSerializableExtra(ListMeetingsActivity.MEETING_EXTRA);
             AddMeetingUiModel meetingUiModel = mAddMeetingViewModel.getAddMeetingUiModelfromMeeting(meeting);
             setFieldsFromAddActivityUiModel(meetingUiModel);
-        }else{
+        } else {
             txtStartDate.setText(LocalDateTime.now().format(mAddMeetingViewModel.mDateFormatter));
             txtStartHour.setText(LocalDateTime.now().format(mAddMeetingViewModel.mTimeFormatter));
             txtStopDate.setText(LocalDateTime.now().plusHours(1).format(mAddMeetingViewModel.mDateFormatter));
@@ -232,7 +243,7 @@ public class AddMeetingActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == REQUEST_CODE && resultCode == RESULT_OK && data!= null) {
+        if (requestCode == REQUEST_CODE && resultCode == RESULT_OK && data != null) {
             AddMeetingUiModel meetingSaved = (AddMeetingUiModel) data.getSerializableExtra(MEETING_EXTRA);
             setFieldsFromAddActivityUiModel(meetingSaved);
         }
@@ -250,15 +261,14 @@ public class AddMeetingActivity extends AppCompatActivity {
     }
 
 
-
     private void setFieldsFromAddActivityUiModel(AddMeetingUiModel meeting) {
-            edtxTitle.setText(meeting.getTitle());
-            txtStartDate.setText(meeting.getStartDate());
-            txtStartHour.setText(meeting.getStartHour());
-            txtStopDate.setText(meeting.getStopDate());
-            txtStopHour.setText(meeting.getStopHour());
-            txtLocation.setText(meeting.getRoom());
-            txtContacts.setText(meeting.getParticipants());
+        edtxTitle.setText(meeting.getTitle());
+        txtStartDate.setText(meeting.getStartDate());
+        txtStartHour.setText(meeting.getStartHour());
+        txtStopDate.setText(meeting.getStopDate());
+        txtStopHour.setText(meeting.getStopHour());
+        txtLocation.setText(meeting.getRoom());
+        txtContacts.setText(meeting.getParticipants());
     }
 
 

@@ -9,9 +9,16 @@ import com.jakewharton.threetenabp.AndroidThreeTen;
  */
 public class MainApplication extends Application {
 
+    private static Application sApplication;
+
+    public static Application getApplication() {
+        return sApplication;
+    }
+
     @Override
     public void onCreate() {
         super.onCreate();
         AndroidThreeTen.init(this);
+        sApplication = this;
     }
 }

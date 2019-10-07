@@ -19,8 +19,9 @@ public class MeetingRepository {
 
     private MeetingDao mMeetingDao;
 
-    public MeetingRepository(Application application) {
-        mMeetingDao = MeetingDataBase.getInstance(application).meetingDao();
+    public MeetingRepository(MeetingDao meetingDao) {
+        mMeetingDao = meetingDao;
+
     }
 
     public LiveData<List<Meeting>> getAllMeetings() {
