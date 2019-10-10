@@ -1,4 +1,4 @@
-package com.sbizzera.mareu.view;
+package com.sbizzera.mareu;
 
 
 
@@ -7,6 +7,8 @@ import androidx.test.rule.ActivityTestRule;
 import androidx.test.runner.AndroidJUnit4;
 
 import com.sbizzera.mareu.R;
+import com.sbizzera.mareu.view.ListMeetingsActivity;
+
 
 import org.junit.Rule;
 import org.junit.Test;
@@ -27,9 +29,10 @@ public class ListMeetingsActivityTest {
     public ActivityTestRule<ListMeetingsActivity> mActivityTestRule = new ActivityTestRule<>(ListMeetingsActivity.class);
 
     @Test
-    public void listMeetingsActivityTest() {
-        onView(withId(R.id.fab_add_meeting)).perform(click());
+    public void onFabClick_AddMeetingActivity_isLaunchedWithSucces() {
+        onView(withId(R.id.add_meeting_fab)).perform(click());
         onView(withId(R.id.edtxt_meeting_title)).check(matches(isDisplayed()));
     }
+
 
 }

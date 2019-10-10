@@ -1,4 +1,4 @@
-package com.sbizzera.mareu.room.utils;
+package com.sbizzera.mareu;
 
 import androidx.annotation.Nullable;
 import androidx.lifecycle.LiveData;

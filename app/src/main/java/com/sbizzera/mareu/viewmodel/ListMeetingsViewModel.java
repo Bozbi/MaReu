@@ -35,7 +35,7 @@ public class ListMeetingsViewModel extends ViewModel implements Serializable {
 
     private MeetingRepository mMeetingRepository;
     private LiveData<List<Meeting>> mAllMeetings;
-    private MutableLiveData<MeetingRoom> mRoomFilter = new MutableLiveData<>();
+    private MutableLiveData<MeetingRoom> mRoomFilter;
     private MutableLiveData<LocalDate> mDateFilter = new MutableLiveData<>();
     private MediatorLiveData<Integer> mMenuMediatorLiveData = new MediatorLiveData<>();
     private MediatorLiveData<List<Meeting>> mFilteredMeetings = new MediatorLiveData<>();
@@ -51,6 +51,9 @@ public class ListMeetingsViewModel extends ViewModel implements Serializable {
         mAllMeetings = mMeetingRepository.getAllMeetings();
 
         mMenuMediatorLiveData.setValue(R.menu.filter_meetings_menu);
+
+        mRoomFilter= new MutableLiveData<>();
+        mDateFilter = new MutableLiveData<>();
 
 
         mFilteredMeetings.addSource(mAllMeetings, new Observer<List<Meeting>>() {
@@ -208,6 +211,11 @@ public class ListMeetingsViewModel extends ViewModel implements Serializable {
         return mMenuMediatorLiveData;
     }
 
+    public void setRoomFilter(MutableLiveData<MeetingRoom> roomFilter) {
+        mRoomFilter = roomFilter;
+    }
 
-
+    public void setDateFilter(MutableLiveData<LocalDate> dateFilter) {
+        mDateFilter = dateFilter;
+    }
 }

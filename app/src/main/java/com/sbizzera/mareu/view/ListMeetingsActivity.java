@@ -36,8 +36,8 @@ public class ListMeetingsActivity extends AppCompatActivity implements ListMeeti
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list_meetings);
 
-        RecyclerView meetingListRecyclerView = findViewById(R.id.recycler_view_list_meeting);
-        FloatingActionButton addMeetingFab = findViewById(R.id.fab_add_meeting);
+        RecyclerView meetingListRecyclerView = findViewById(R.id.meeting_list_recycler_view);
+        FloatingActionButton addMeetingFab = findViewById(R.id.add_meeting_fab);
 
         final ListMeetingsRecyclerViewAdapter adapter = new ListMeetingsRecyclerViewAdapter(this);
         meetingListRecyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -51,6 +51,7 @@ public class ListMeetingsActivity extends AppCompatActivity implements ListMeeti
                 adapter.setAllMeetingsList(meetings);
             }
         });
+
 
         mListMeetingsViewModel.getMenuLiveDate().observe(this, new Observer<Integer>() {
             @Override
