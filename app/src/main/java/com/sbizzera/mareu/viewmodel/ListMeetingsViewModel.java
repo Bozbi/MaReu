@@ -1,11 +1,8 @@
 package com.sbizzera.mareu.viewmodel;
 
-import android.app.Application;
 import android.text.TextUtils;
 
-import androidx.annotation.NonNull;
 import androidx.arch.core.util.Function;
-import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MediatorLiveData;
 import androidx.lifecycle.MutableLiveData;
@@ -14,10 +11,10 @@ import androidx.lifecycle.Transformations;
 import androidx.lifecycle.ViewModel;
 
 import com.sbizzera.mareu.R;
+import com.sbizzera.mareu.model.ListMeetingsUiModel;
 import com.sbizzera.mareu.model.Meeting;
 import com.sbizzera.mareu.model.MeetingRoom;
 import com.sbizzera.mareu.repository.MeetingRepository;
-import com.sbizzera.mareu.model.ListMeetingsUiModel;
 
 import org.threeten.bp.LocalDate;
 import org.threeten.bp.LocalDateTime;
@@ -35,7 +32,7 @@ public class ListMeetingsViewModel extends ViewModel implements Serializable {
 
     private MeetingRepository mMeetingRepository;
     private LiveData<List<Meeting>> mAllMeetings;
-    private MutableLiveData<MeetingRoom> mRoomFilter;
+    private MutableLiveData<MeetingRoom> mRoomFilter = new MutableLiveData<>();
     private MutableLiveData<LocalDate> mDateFilter = new MutableLiveData<>();
     private MediatorLiveData<Integer> mMenuMediatorLiveData = new MediatorLiveData<>();
     private MediatorLiveData<List<Meeting>> mFilteredMeetings = new MediatorLiveData<>();
@@ -52,44 +49,9 @@ public class ListMeetingsViewModel extends ViewModel implements Serializable {
 
         mMenuMediatorLiveData.setValue(R.menu.filter_meetings_menu);
 
-        mRoomFilter= new MutableLiveData<>();
-        mDateFilter = new MutableLiveData<>();
+        setFilteredMeetingsValue();
 
-
-        mFilteredMeetings.addSource(mAllMeetings, new Observer<List<Meeting>>() {
-            @Override
-            public void onChanged(List<Meeting> meetings) {
-                mFilteredMeetings.setValue(combineMeetingsRoomAndDateFilter(meetings, mRoomFilter.getValue(), mDateFilter.getValue()));
-            }
-        });
-
-        mFilteredMeetings.addSource(mRoomFilter, new Observer<MeetingRoom>() {
-            @Override
-            public void onChanged(MeetingRoom roomName) {
-                mFilteredMeetings.setValue(combineMeetingsRoomAndDateFilter(mAllMeetings.getValue(), roomName, mDateFilter.getValue()));
-            }
-        });
-
-        mFilteredMeetings.addSource(mDateFilter, new Observer<LocalDate>() {
-            @Override
-            public void onChanged(LocalDate localDate) {
-                mFilteredMeetings.setValue(combineMeetingsRoomAndDateFilter(mAllMeetings.getValue(), mRoomFilter.getValue(), localDate));
-            }
-        });
-
-        mMenuMediatorLiveData.addSource(mDateFilter, new Observer<LocalDate>() {
-            @Override
-            public void onChanged(LocalDate localDate) {
-                mMenuMediatorLiveData.setValue(combineFilters(localDate,mRoomFilter.getValue()));
-            }
-        });
-
-        mMenuMediatorLiveData.addSource(mRoomFilter, new Observer<MeetingRoom>() {
-            @Override
-            public void onChanged(MeetingRoom meetingRoom) {
-                mMenuMediatorLiveData.setValue(combineFilters(mDateFilter.getValue(), meetingRoom));
-            }
-        });
+        setMenuMediatorLiveData();
 
 
         mListMeetingsUiModel = Transformations.map(mFilteredMeetings, new Function<List<Meeting>, List<ListMeetingsUiModel>>() {
@@ -115,8 +77,8 @@ public class ListMeetingsViewModel extends ViewModel implements Serializable {
                         meetingTitle = meeting.getTitle();
                         color = meeting.getRoom().getColor();
                         meetingDateAndRoom = meetingDateStart + meetingEndDate + " - " + room;
-                        participant = TextUtils.join(", ", meeting.getParticipants());
 
+                        participant = TextUtils.join(", ", meeting.getParticipants());
 
                         ListMeetingsUiModel model = new ListMeetingsUiModel(meeting.getId(), meetingTitle, meetingDateAndRoom, color, participant);
                         result.add(model);
@@ -128,11 +90,50 @@ public class ListMeetingsViewModel extends ViewModel implements Serializable {
 
     }
 
+    private void setMenuMediatorLiveData() {
+        mMenuMediatorLiveData.addSource(mDateFilter, new Observer<LocalDate>() {
+            @Override
+            public void onChanged(LocalDate localDate) {
+                mMenuMediatorLiveData.setValue(combineFilters(localDate, mRoomFilter.getValue()));
+            }
+        });
+
+        mMenuMediatorLiveData.addSource(mRoomFilter, new Observer<MeetingRoom>() {
+            @Override
+            public void onChanged(MeetingRoom meetingRoom) {
+                mMenuMediatorLiveData.setValue(combineFilters(mDateFilter.getValue(), meetingRoom));
+            }
+        });
+    }
+
+    private void setFilteredMeetingsValue() {
+        mFilteredMeetings.addSource(mAllMeetings, new Observer<List<Meeting>>() {
+            @Override
+            public void onChanged(List<Meeting> meetings) {
+                mFilteredMeetings.setValue(combineMeetingsRoomAndDateFilter(meetings, mRoomFilter.getValue(), mDateFilter.getValue()));
+            }
+        });
+
+        mFilteredMeetings.addSource(mRoomFilter, new Observer<MeetingRoom>() {
+            @Override
+            public void onChanged(MeetingRoom roomName) {
+                mFilteredMeetings.setValue(combineMeetingsRoomAndDateFilter(mAllMeetings.getValue(), roomName, mDateFilter.getValue()));
+            }
+        });
+
+        mFilteredMeetings.addSource(mDateFilter, new Observer<LocalDate>() {
+            @Override
+            public void onChanged(LocalDate localDate) {
+                mFilteredMeetings.setValue(combineMeetingsRoomAndDateFilter(mAllMeetings.getValue(), mRoomFilter.getValue(), localDate));
+            }
+        });
+    }
+
     private Integer combineFilters(LocalDate localDate, MeetingRoom meetingRoom) {
 
-        if (localDate == null && meetingRoom == null){
+        if (localDate == null && meetingRoom == null) {
             return R.menu.filter_meetings_menu;
-        } else{
+        } else {
             return R.menu.filtered_meetings_menu;
         }
 
@@ -165,14 +166,16 @@ public class ListMeetingsViewModel extends ViewModel implements Serializable {
         }
 
 
-
         return result;
     }
 
     public LiveData<List<ListMeetingsUiModel>> getMeetings() {
         return mListMeetingsUiModel;
     }
-    public MediatorLiveData<List<Meeting>> getFilteredMeetings(){return mFilteredMeetings;}
+
+    public MediatorLiveData<List<Meeting>> getFilteredMeetings() {
+        return mFilteredMeetings;
+    }
 
     public void deleteMeeting(ListMeetingsUiModel meeting) {
         mMeetingRepository.deleteMeeting(meeting.getId());
@@ -190,12 +193,12 @@ public class ListMeetingsViewModel extends ViewModel implements Serializable {
 
     public void setFilters(String date, String room) {
 
-        if (date== null || date.isEmpty()) {
+        if (date == null || date.isEmpty()) {
             mDateFilter.postValue(null);
         } else {
             mDateFilter.postValue(LocalDate.parse(date, mDateFormatter));
         }
-        if (room== null || room.isEmpty()) {
+        if (room == null || room.isEmpty()) {
             mRoomFilter.postValue(null);
         } else {
             mRoomFilter.postValue(MeetingRoom.valueOf(room.toUpperCase()));
@@ -211,11 +214,5 @@ public class ListMeetingsViewModel extends ViewModel implements Serializable {
         return mMenuMediatorLiveData;
     }
 
-    public void setRoomFilter(MutableLiveData<MeetingRoom> roomFilter) {
-        mRoomFilter = roomFilter;
-    }
 
-    public void setDateFilter(MutableLiveData<LocalDate> dateFilter) {
-        mDateFilter = dateFilter;
-    }
 }

@@ -103,14 +103,14 @@ public class AddMeetingViewModel extends ViewModel {
         return new Meeting(title, meetingStart, meetingStop, meetingRoom, participantList);
     }
 
-    private boolean isMeetingHoursCoherent(Meeting meeting) {
+    public boolean isMeetingHoursCoherent(Meeting meeting) {
         if (meeting.getMeetingStart().isBefore(meeting.getMeetingStop()) && meeting.getMeetingStart().isAfter(LocalDateTime.now())) {
             return true;
         }
         return false;
     }
 
-    private boolean isMeetingRoomAvailable(Meeting meeting) {
+    public boolean isMeetingRoomAvailable(Meeting meeting) {
         List<Meeting> meetingList = mMeetingRepository.getAllMeetingsSync();
         for (Meeting meetingInList : meetingList) {
             if (meetingInList.getId() != meeting.getId()) { //same Meeting so don't go further
