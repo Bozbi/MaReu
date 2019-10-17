@@ -29,8 +29,7 @@ public class Converters {
     @TypeConverter
     public static String fromMeetingRoom(MeetingRoom meetingRoom) {
         Gson gson = new Gson();
-        String json = gson.toJson(meetingRoom);
-        return json;
+        return gson.toJson(meetingRoom);
     }
 
     @TypeConverter
@@ -53,7 +52,6 @@ public class Converters {
     @TypeConverter
     public static String fromListString(List<String> stringList) {
         Gson gson = new Gson();
-        String json = gson.toJson(stringList);
-        return json;
+        return gson.toJson(stringList);
     }
 }

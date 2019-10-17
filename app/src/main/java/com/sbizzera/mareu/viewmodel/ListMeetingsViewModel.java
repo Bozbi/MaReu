@@ -53,7 +53,6 @@ public class ListMeetingsViewModel extends ViewModel implements Serializable {
 
         setMenuMediatorLiveData();
 
-
         mListMeetingsUiModel = Transformations.map(mFilteredMeetings, new Function<List<Meeting>, List<ListMeetingsUiModel>>() {
             @Override
             public List<ListMeetingsUiModel> apply(List<Meeting> input) {
@@ -66,13 +65,11 @@ public class ListMeetingsViewModel extends ViewModel implements Serializable {
                         String participant;
                         int color;
 
-
                         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/YY - HH:mm 'à' ");
                         String meetingDateStart = meeting.getMeetingStart().format(formatter);
                         DateTimeFormatter formatter2 = DateTimeFormatter.ofPattern("HH:mm");
                         String meetingEndDate = meeting.getMeetingStop().format(formatter2);
                         String room = meeting.getRoom().getRoomName();
-
 
                         meetingTitle = meeting.getTitle();
                         color = meeting.getRoom().getColor();
@@ -180,7 +177,6 @@ public class ListMeetingsViewModel extends ViewModel implements Serializable {
     public void deleteMeeting(ListMeetingsUiModel meeting) {
         mMeetingRepository.deleteMeeting(meeting.getId());
     }
-
 
     private void deleteOldMeetings() {
         List<Meeting> allMeetingsSync = mMeetingRepository.getAllMeetingsSync();

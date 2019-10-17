@@ -26,7 +26,7 @@ import java.util.List;
 
 public class ListMeetingsActivity extends AppCompatActivity implements ListMeetingsRecyclerViewAdapter.OnMeetingClickListener {
 
-    private ListMeetingsViewModel mListMeetingsViewModel;
+    public ListMeetingsViewModel mListMeetingsViewModel;
     public static final String INTENT_ACTION_ADD_NOTE = "com.sbizzera.mareu.INTENT_ACTION_ADD_NOTE";
     public static final String INTENT_ACTION_UPDATE_NOTE = "com.sbizzera.mareu.INTENT_ACTION_UPDATE_NOTE";
     public static final String MEETING_EXTRA = "MEETING_EXTRA";
@@ -43,7 +43,6 @@ public class ListMeetingsActivity extends AppCompatActivity implements ListMeeti
         meetingListRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         meetingListRecyclerView.setAdapter(adapter);
 
-
         mListMeetingsViewModel = ViewModelProviders.of(this, ViewModelFactory.getInstance()).get(ListMeetingsViewModel.class);
         mListMeetingsViewModel.getMeetings().observe(this, new Observer<List<ListMeetingsUiModel>>() {
             @Override
@@ -51,7 +50,6 @@ public class ListMeetingsActivity extends AppCompatActivity implements ListMeeti
                 adapter.setAllMeetingsList(meetings);
             }
         });
-
 
         mListMeetingsViewModel.getMenuLiveDate().observe(this, new Observer<Integer>() {
             @Override
@@ -82,7 +80,6 @@ public class ListMeetingsActivity extends AppCompatActivity implements ListMeeti
         return false;
     }
 
-
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         if (item.getIcon().getConstantState().equals(getResources().getDrawable(R.drawable.ic_filter).getConstantState())) {
@@ -93,7 +90,6 @@ public class ListMeetingsActivity extends AppCompatActivity implements ListMeeti
         }
         return true;
     }
-
 
     @Override
     public void onDeleteClick(ListMeetingsUiModel meeting) {

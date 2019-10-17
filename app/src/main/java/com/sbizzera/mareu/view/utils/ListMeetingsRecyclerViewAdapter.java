@@ -1,5 +1,6 @@
 package com.sbizzera.mareu.view.utils;
 
+import android.annotation.SuppressLint;
 import android.graphics.PorterDuff;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -35,6 +36,7 @@ public class ListMeetingsRecyclerViewAdapter extends RecyclerView.Adapter<ListMe
         return new MeetingViewHolder(view, mOnMeetingClickListener);
     }
 
+    @SuppressLint("NewApi")
     @Override
     public void onBindViewHolder(@NonNull MeetingViewHolder holder, int position) {
         ListMeetingsUiModel currentMeeting = mAllMeetings.get(position);
@@ -42,7 +44,6 @@ public class ListMeetingsRecyclerViewAdapter extends RecyclerView.Adapter<ListMe
         holder.mMeetingDateandRoomTextView.setText(currentMeeting.getMeetingDateAndRoom());
         holder.mMeetingParticiapantsTextView.setText(currentMeeting.getListMeetingsParticipants());
         holder.mImageView.setColorFilter(holder.mImageView.getContext().getColor(currentMeeting.getListMeetingsColor()), PorterDuff.Mode.MULTIPLY);
-
     }
 
     @Override

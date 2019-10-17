@@ -1,7 +1,5 @@
 package com.sbizzera.mareu.model;
 
-import com.sbizzera.mareu.repository.MeetingRepository;
-
 import java.io.Serializable;
 
 /**
@@ -18,7 +16,6 @@ public class AddMeetingUiModel implements Serializable {
     private String mParticipants;
 
 
-
     public AddMeetingUiModel(String title, String startDate, String startHour, String stopDate, String stopHour, String room, String participants) {
         mTitle = title;
         mStartDate = startDate;
@@ -28,7 +25,6 @@ public class AddMeetingUiModel implements Serializable {
         mRoom = room;
         mParticipants = participants;
     }
-
 
     public String getTitle() {
         return mTitle;

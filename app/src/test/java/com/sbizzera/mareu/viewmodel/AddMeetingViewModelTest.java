@@ -45,8 +45,8 @@ public class AddMeetingViewModelTest {
         Meeting meeting1 = new Meeting("Meeting Test 1", LocalDateTime.of(LocalDate.of(2100, 1, 1), LocalTime.of(0, 0)),
                 LocalDateTime.of(LocalDate.of(2100, 1, 1), LocalTime.of(1, 0)),
                 MeetingRoom.MARIO, Arrays.asList("boris@oc.com", "nino@oc.com"));
-
         meeting1.setId(1);
+
         Meeting meeting2 = new Meeting("Meeting Test 2", LocalDateTime.of(LocalDate.of(2100, 1, 2), LocalTime.of(1, 0)),
                 LocalDateTime.of(LocalDate.of(2100, 1, 2), LocalTime.of(2, 0)),
                 MeetingRoom.MARIO, Arrays.asList("charles@oc.com", "gerard@oc.com"));

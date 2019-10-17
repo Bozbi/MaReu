@@ -9,7 +9,7 @@ import java.io.Serializable;
  */
 public class ListMeetingsUiModel implements Serializable {
 
-    private  int mId;
+    private int mId;
     private String mListMeetingsTitle;
     private String mMeetingDateAndRoom;
     private int mListMeetingsColor;
@@ -23,7 +23,6 @@ public class ListMeetingsUiModel implements Serializable {
         mId = id;
     }
 
-
     public int getId() {
         return mId;
     }
@@ -32,31 +31,16 @@ public class ListMeetingsUiModel implements Serializable {
         return mListMeetingsTitle;
     }
 
-    public void setListMeetingsTitle(String listMeetingsTitle) {
-        mListMeetingsTitle = listMeetingsTitle;
-    }
-
     public int getListMeetingsColor() {
         return mListMeetingsColor;
-    }
-
-    public void setListMeetingsColor(int listMeetingsColor) {
-        mListMeetingsColor = listMeetingsColor;
     }
 
     public String getListMeetingsParticipants() {
         return mListMeetingsParticipants;
     }
 
-    public void setListMeetingsParticipants(String listMeetingsParticipants) {
-        mListMeetingsParticipants = listMeetingsParticipants;
-    }
-
     public String getMeetingDateAndRoom() {
         return mMeetingDateAndRoom;
     }
 
-    public void setMeetingDateAndRoom(String meetingDate) {
-        mMeetingDateAndRoom = meetingDate;
-    }
 }

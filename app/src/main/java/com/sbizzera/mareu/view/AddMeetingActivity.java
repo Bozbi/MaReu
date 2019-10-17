@@ -34,9 +34,6 @@ import org.threeten.bp.LocalTime;
 
 public class AddMeetingActivity extends AppCompatActivity {
 
-    //Need To
-
-
     private static final String MEETING_KEY = "MEETING_KEY";
     public static final String MEETING_EXTRA = "MEETING_EXTRA";
     private static final int REQUEST_CODE = 1;
@@ -50,7 +47,6 @@ public class AddMeetingActivity extends AppCompatActivity {
     private TextView txtLocation;
 
     private AddMeetingViewModel mAddMeetingViewModel;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,7 +70,6 @@ public class AddMeetingActivity extends AppCompatActivity {
 
         setFieldDependingOnIntentAction(getIntent());
 
-
         mAddMeetingViewModel.getAlertMessage().observe(this, new Observer<String>() {
             @Override
             public void onChanged(String message) {
@@ -87,7 +82,7 @@ public class AddMeetingActivity extends AppCompatActivity {
         mAddMeetingViewModel.getViewAction().observe(this, new Observer<ViewAction>() {
             @Override
             public void onChanged(ViewAction viewAction) {
-                if(viewAction!=null) {
+                if (viewAction != null) {
                     switch (viewAction) {
                         case FINISH:
                             finish();
@@ -227,14 +222,12 @@ public class AddMeetingActivity extends AppCompatActivity {
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
-
         outState.putSerializable(MEETING_KEY, createAddMeetingUiModelFromFields());
         super.onSaveInstanceState(outState);
     }
 
     @Override
     protected void onRestoreInstanceState(@NonNull Bundle savedInstanceState) {
-
         AddMeetingUiModel meetingSaved = (AddMeetingUiModel) savedInstanceState.getSerializable(MEETING_KEY);
         setFieldsFromAddActivityUiModel(meetingSaved);
         super.onRestoreInstanceState(savedInstanceState);
@@ -259,7 +252,6 @@ public class AddMeetingActivity extends AppCompatActivity {
                 txtLocation.getText().toString(),
                 txtContacts.getText().toString());
     }
-
 
     private void setFieldsFromAddActivityUiModel(AddMeetingUiModel meeting) {
         edtxTitle.setText(meeting.getTitle());

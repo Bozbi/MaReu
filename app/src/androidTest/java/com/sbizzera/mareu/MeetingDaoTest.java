@@ -10,7 +10,6 @@ import com.sbizzera.mareu.model.Meeting;
 import com.sbizzera.mareu.model.MeetingRoom;
 import com.sbizzera.mareu.room.MeetingDataBase;
 
-
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
@@ -45,7 +44,7 @@ public class MeetingDaoTest {
             Arrays.asList("boris@gmail.com", "celine@gmail.com"));
 
     @Rule
-    public InstantTaskExecutorRule instantTaskExecutorRule= new InstantTaskExecutorRule();
+    public InstantTaskExecutorRule instantTaskExecutorRule = new InstantTaskExecutorRule();
 
     @Before
     public void initDb() throws Exception {
@@ -93,7 +92,7 @@ public class MeetingDaoTest {
         MEETING_DEMO.setRoom(MeetingRoom.LUIGI);
         dataBase.meetingDao().updateMeeting(MEETING_DEMO);
         List<Meeting> meetingList = LiveDataTestUtil.getValue(dataBase.meetingDao().getAllMeetings());
-        Meeting meeting = LiveDataTestUtil.getValue(dataBase.meetingDao().getAllMeetings()).get(0);
+        Meeting meeting = meetingList.get(0);
         assertNotEquals(MeetingRoom.LUIGI, meeting.getRoom());
     }
 

@@ -16,18 +16,11 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         >
-
-
-        <RelativeLayout
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:paddingHorizontal="16dp"
-            >
-
             <Button
                 android:id="@+id/btn_save_meeting"
+                android:layout_gravity="end"
                 android:layout_alignParentEnd="true"
-                android:layout_marginEnd="6dp"
+                android:layout_marginEnd="22dp"
                 android:layout_marginTop="6dp"
                 android:layout_marginStart="6dp"
                 android:layout_marginBottom="6dp"
@@ -39,9 +32,6 @@
                 android:textAllCaps="false"
                 android:textColor="@android:color/white"
                 />
-
-        </RelativeLayout>
-
 
     </androidx.appcompat.widget.Toolbar>
 

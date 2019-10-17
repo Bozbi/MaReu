@@ -1,13 +1,11 @@
 package com.sbizzera.mareu.repository;
 
-import android.app.Application;
 import android.os.AsyncTask;
 
 import androidx.lifecycle.LiveData;
 
 import com.sbizzera.mareu.model.Meeting;
 import com.sbizzera.mareu.room.MeetingDao;
-import com.sbizzera.mareu.room.MeetingDataBase;
 
 import java.util.List;
 
@@ -21,13 +19,11 @@ public class MeetingRepository {
 
     public MeetingRepository(MeetingDao meetingDao) {
         mMeetingDao = meetingDao;
-
     }
 
     public LiveData<List<Meeting>> getAllMeetings() {
         return mMeetingDao.getAllMeetings();
     }
-
 
     public void insertMeeting(Meeting meeting) {
         new InsertMeetingAsyncTask(mMeetingDao).execute(meeting);
@@ -83,7 +79,8 @@ public class MeetingRepository {
         }
     }
 
-    public List<Meeting> getAllMeetingsSync() {
+    public List<Meeting>
+    getAllMeetingsSync() {
         return mMeetingDao.getAllMeetingsSync();
     }
 

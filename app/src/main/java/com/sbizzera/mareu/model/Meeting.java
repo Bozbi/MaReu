@@ -1,9 +1,7 @@
 package com.sbizzera.mareu.model;
 
-import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
-import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
 import org.threeten.bp.LocalDateTime;
@@ -50,16 +48,8 @@ public class Meeting implements Serializable {
         return mTitle;
     }
 
-    public void setTitle(String title) {
-        mTitle = title;
-    }
-
     public List<String> getParticipants() {
         return mParticipants;
-    }
-
-    public void setParticipants(List<String> participants) {
-        mParticipants = participants;
     }
 
     public LocalDateTime getMeetingStart() {

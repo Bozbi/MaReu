@@ -71,7 +71,6 @@ public class ListMeetingsViewModelTest {
 
         //Then
         assertEquals(2, result.size());
-
     }
 
     @Test
@@ -92,7 +91,7 @@ public class ListMeetingsViewModelTest {
         //When
         List<ListMeetingsUiModel> result = LiveDataTestUtil.getValue(viewModel.getMeetings());
 
-
+//TODO idem
         //Then
         assertEquals("Meeting Test 1", result.get(0).getListMeetingsTitle());
         assertEquals("02/01/30 - 01:00 à 02:00 - Luigi", result.get(1).getMeetingDateAndRoom());
@@ -120,6 +119,7 @@ public class ListMeetingsViewModelTest {
         assertEquals(1, result.size());
         assertEquals("Meeting Test 1", result.get(0).getTitle());
         assertEquals("Mario", result.get(0).getRoom().getRoomName());
+
 
         //Given Filters on Date 2030/01/02
         LocalDate date = LocalDate.of(2030, 1, 2);
@@ -167,6 +167,7 @@ public class ListMeetingsViewModelTest {
         result = LiveDataTestUtil.getValue(viewModel.getMenuLiveDate());
         //Then
         assertEquals(R.menu.filtered_meetings_menu, result);
+
 
         //Given
         viewModel.setFilters("02/01/2030", "Mario");

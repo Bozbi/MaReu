@@ -1,11 +1,8 @@
 package com.sbizzera.mareu.viewmodel;
 
-import android.app.Application;
 import android.content.Intent;
 import android.text.TextUtils;
 
-import androidx.annotation.NonNull;
-import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
@@ -14,9 +11,7 @@ import com.sbizzera.mareu.model.AddMeetingUiModel;
 import com.sbizzera.mareu.model.Meeting;
 import com.sbizzera.mareu.model.MeetingRoom;
 import com.sbizzera.mareu.repository.MeetingRepository;
-import com.sbizzera.mareu.room.MeetingDao;
 import com.sbizzera.mareu.view.ListMeetingsActivity;
-import com.sbizzera.mareu.view.MainApplication;
 
 import org.threeten.bp.LocalDate;
 import org.threeten.bp.LocalDateTime;
@@ -25,6 +20,7 @@ import org.threeten.bp.format.DateTimeFormatter;
 
 import java.util.Arrays;
 import java.util.List;
+
 
 /**
  * Creates by Boris SBIZZERA on 09/09/2019.
@@ -39,7 +35,7 @@ public class AddMeetingViewModel extends ViewModel {
 
     private MutableLiveData<String> mAlertMessage = new MutableLiveData<>();
 
-    private MutableLiveData<ViewAction> mViewAction =  new MutableLiveData<>();
+    private MutableLiveData<ViewAction> mViewAction = new MutableLiveData<>();
 
     public LiveData<ViewAction> getViewAction() {
         return mViewAction;
@@ -60,8 +56,8 @@ public class AddMeetingViewModel extends ViewModel {
     public void insertOrUpdateMeeting(String title, String startDate, String startHour, String stopDate, String stopHour, String participants, String room, Intent intent) {
         if (areAllFieldsCompleted(title, participants, room)) {
             Meeting meeting = newMeetingFromStrings(title, startDate, startHour, stopDate, stopHour, participants, room);
-            if(intent.hasExtra(ListMeetingsActivity.MEETING_EXTRA)){
-                meeting.setId(((Meeting)intent.getSerializableExtra(ListMeetingsActivity.MEETING_EXTRA)).getId());
+            if (intent.hasExtra(ListMeetingsActivity.MEETING_EXTRA)) {
+                meeting.setId(((Meeting) intent.getSerializableExtra(ListMeetingsActivity.MEETING_EXTRA)).getId());
             }
             if (isMeetingHoursCoherent(meeting)) {
                 if (isMeetingRoomAvailable(meeting)) {
@@ -104,18 +100,15 @@ public class AddMeetingViewModel extends ViewModel {
     }
 
     public boolean isMeetingHoursCoherent(Meeting meeting) {
-        if (meeting.getMeetingStart().isBefore(meeting.getMeetingStop()) && meeting.getMeetingStart().isAfter(LocalDateTime.now())) {
-            return true;
-        }
-        return false;
+        return meeting.getMeetingStart().isBefore(meeting.getMeetingStop()) && meeting.getMeetingStart().isAfter(LocalDateTime.now().minusMinutes(15));
     }
 
     public boolean isMeetingRoomAvailable(Meeting meeting) {
         List<Meeting> meetingList = mMeetingRepository.getAllMeetingsSync();
         for (Meeting meetingInList : meetingList) {
             if (meetingInList.getId() != meeting.getId()) { //same Meeting so don't go further
-                if (isInTheSameRoom(meeting,meetingInList)) { //if room different don't go further
-                    if (areMeetingsHoursCrossings(meeting,meetingInList)){
+                if (isInTheSameRoom(meeting, meetingInList)) { //if room different don't go further
+                    if (areMeetingsHoursCrossings(meeting, meetingInList)) {
                         return false;
                     }
                 }
@@ -124,26 +117,26 @@ public class AddMeetingViewModel extends ViewModel {
         return true;
     }
 
-    private boolean areMeetingsHoursCrossings(Meeting firstMeeting, Meeting secondMeeting){
+    private boolean areMeetingsHoursCrossings(Meeting firstMeeting, Meeting secondMeeting) {
         LocalDateTime firstMeetingStart = firstMeeting.getMeetingStart();
         LocalDateTime firstMeetingStop = firstMeeting.getMeetingStop();
         LocalDateTime secondMeetingStart = secondMeeting.getMeetingStart();
         LocalDateTime secondMeetingStop = secondMeeting.getMeetingStop();
 
-        if(firstMeetingStop.isBefore(secondMeetingStart)||firstMeetingStop.isEqual(secondMeetingStart)){
+        if (firstMeetingStop.isBefore(secondMeetingStart) || firstMeetingStop.isEqual(secondMeetingStart)) {
             return false;
         }
-        if (firstMeetingStart.isAfter(secondMeetingStop)||firstMeetingStart.isEqual(secondMeetingStop)){
+        if (firstMeetingStart.isAfter(secondMeetingStop) || firstMeetingStart.isEqual(secondMeetingStop)) {
             return false;
         }
         return true;
     }
 
-    private boolean isInTheSameRoom(Meeting firstMeeting, Meeting secondMeeting){
+    private boolean isInTheSameRoom(Meeting firstMeeting, Meeting secondMeeting) {
         return firstMeeting.getRoom() == secondMeeting.getRoom();
     }
 
-    public AddMeetingUiModel getAddMeetingUiModelfromMeeting (Meeting meeting){
+    public AddMeetingUiModel getAddMeetingUiModelfromMeeting(Meeting meeting) {
         return new AddMeetingUiModel(
                 meeting.getTitle(),
                 meeting.getMeetingStart().format(mDateFormatter),

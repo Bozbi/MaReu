@@ -5,7 +5,6 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.sbizzera.mareu.repository.MeetingRepository;
 import com.sbizzera.mareu.room.MeetingDataBase;
-import com.sbizzera.mareu.view.ListMeetingsActivity;
 import com.sbizzera.mareu.view.MainApplication;
 
 /**
@@ -36,9 +35,8 @@ public class ViewModelFactory implements ViewModelProvider.Factory {
     public <T extends ViewModel> T create(Class<T> modelClass) {
         if (modelClass.isAssignableFrom(ListMeetingsViewModel.class)) {
             return (T) new ListMeetingsViewModel(mDataSource);
-        }
-        else if (modelClass.isAssignableFrom(AddMeetingViewModel.class)){
-            return(T) new AddMeetingViewModel(mDataSource);
+        } else if (modelClass.isAssignableFrom(AddMeetingViewModel.class)) {
+            return (T) new AddMeetingViewModel(mDataSource);
         }
         throw new IllegalArgumentException("Unknown ViewModel class");
     }

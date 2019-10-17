@@ -17,7 +17,7 @@ import com.sbizzera.mareu.model.utils.Converters;
 @TypeConverters({Converters.class})
 public abstract class MeetingDataBase extends RoomDatabase {
 
-    public static MeetingDataBase instance;
+    private static MeetingDataBase instance;
 
     public abstract MeetingDao meetingDao();
 
@@ -30,5 +30,6 @@ public abstract class MeetingDataBase extends RoomDatabase {
         }
         return instance;
     }
+
 
 }

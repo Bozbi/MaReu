@@ -39,8 +39,6 @@ public class ListContactsRecyclerViewAdapter extends RecyclerView.Adapter<ListCo
         holder.mTxtParticipant.setText( mParticipantsList.get(position));
     }
 
-
-
     @Override
     public int getItemCount() {
         return mParticipantsList.size();
@@ -50,10 +48,10 @@ public class ListContactsRecyclerViewAdapter extends RecyclerView.Adapter<ListCo
 
         private OnDeleteParticipantClickListener mOnDeleteParticipantClickListener;
 
-        public TextView mTxtParticipant;
-        public ImageView mImgDeleteParticipant;
+        TextView mTxtParticipant;
+        ImageView mImgDeleteParticipant;
 
-        public ParticipantViewHolder(@NonNull View itemView, OnDeleteParticipantClickListener onDeleteParticipantClickListener) {
+        ParticipantViewHolder(@NonNull View itemView, OnDeleteParticipantClickListener onDeleteParticipantClickListener) {
             super(itemView);
             mTxtParticipant = itemView.findViewById(R.id.txt_participant_item);
             mImgDeleteParticipant = itemView.findViewById(R.id.img_delete_participant);
