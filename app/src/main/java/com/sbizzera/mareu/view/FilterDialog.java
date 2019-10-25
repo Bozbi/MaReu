@@ -49,7 +49,6 @@ public class FilterDialog extends AppCompatDialogFragment {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         mListMeetingsViewModel = (ListMeetingsViewModel) getArguments().getSerializable("LISTMEETINGSVIEWMODEL_EXTRA");
 
-
         LayoutInflater inflater = getActivity().getLayoutInflater();
         View view = inflater.inflate(R.layout.dialog_filter, null);
 

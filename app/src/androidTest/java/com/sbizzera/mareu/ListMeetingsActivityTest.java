@@ -51,7 +51,6 @@ public class ListMeetingsActivityTest {
         onView(withId(R.id.txt_add_contact)).perform(click());
         onView(withContentDescription("Revenir en haut de la page")).perform(click());
         onView(withId(R.id.btn_save_meeting)).perform(click());
-        onView(withId(R.id.btn_save_meeting)).perform(click());
         //Check meeting has been created
         onView(withId(R.id.meeting_list_recycler_view)).check(matches(hasDescendant(withText(title))));
     }
