@@ -41,7 +41,7 @@ public class FilterDialog extends AppCompatDialogFragment {
         Bundle args = new Bundle();
         args.putSerializable("LISTMEETINGSVIEWMODEL_EXTRA", listMeetingsViewModel);
         FilterDialog dialog = new FilterDialog();
-        dialog.setArguments();
+        dialog.setArguments(args);
         return dialog;
     }
 
